@@ -3,13 +3,13 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 
 const config = {
-  apiKey: "AIzaSyCO5gWFEfXVkjreMVTFQyxCC3CDRYkPyzE",
-  authDomain: "e-commerce-80950.firebaseapp.com",
-  projectId: "e-commerce-80950",
-  storageBucket: "e-commerce-80950.appspot.com",
-  messagingSenderId: "769815808845",
-  appId: "1:769815808845:web:85df0ab5d7dbe28452c504",
-  measurementId: "G-WMQZ03TJDB",
+  apiKey: "AIzaSyA8_GtJ8kfPyNTnyeUnBb8fHT7xBJfI6xM",
+  authDomain: "novelex-consulting.firebaseapp.com",
+  projectId: "novelex-consulting",
+  storageBucket: "novelex-consulting.appspot.com",
+  messagingSenderId: "445236036684",
+  appId: "1:445236036684:web:7718e00beec8542daba0e9",
+  measurementId: "G-2WBK4VHX7M",
 };
 
 firebase.initializeApp(config);

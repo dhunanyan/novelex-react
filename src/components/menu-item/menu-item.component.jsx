@@ -25,7 +25,7 @@ const MenuItem = ({
   className,
 }) => {
   const { name, color } = icon;
-  console.log(color);
+
   return (
     <MenuItemContainer
       className={className}

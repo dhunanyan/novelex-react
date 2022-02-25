@@ -78,6 +78,7 @@ export const MenuItemContent = styled.div`
   background-position: 0px;
   background-size: 200px;
   position: absolute;
+  border: 2px solid #f1f1f1;
 `;
 
 export const MenuItemTitle = styled.h4`

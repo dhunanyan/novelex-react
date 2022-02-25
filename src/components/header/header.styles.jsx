@@ -129,7 +129,15 @@ export const HeaderLink = styled(Link)`
 
 export const HeaderButton = styled.button`
   ${LinksCSS}
-  border: 0;
+  background-color: #54698d;
+  color: #f1f1f1;
+  border: 2px solid #54698d;
+  padding: 6px 13px;
+
+  &:hover {
+    color: #54698d;
+    background-color: #f1f1f1;
+  }
 `;
 
 export const HeaderToggle = styled.div`

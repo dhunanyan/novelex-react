@@ -4,14 +4,16 @@ import storage from "redux-persist/lib/storage";
 
 import directoryReducer from "./directory/directory.reducer";
 import heroReducer from "./hero/hero.reducer";
+import userReducer from "./user/user.reducer";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cart"],
+  whitelist: ["card"],
 };
 
 const rootReducer = combineReducers({
+  user: userReducer,
   directory: directoryReducer,
   hero: heroReducer,
 });
