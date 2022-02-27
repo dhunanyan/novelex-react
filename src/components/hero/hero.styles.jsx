@@ -1,15 +1,33 @@
 import styled from "styled-components";
 
-export const HeroContainer = styled.div`
+import homeHeroImg from "../../assets/home/hero.jpg";
+import homeAboutImg from "../../assets/about/hero.jpg";
+import homeServicesImg from "../../assets/services/hero.jpg";
+import homeCareersImg from "../../assets/careers/hero.jpg";
+import homeLifeImg from "../../assets/life/hero.jpg";
+
+const getHeroImageUrl = (heroName) =>
+  heroName === "home"
+    ? homeHeroImg
+    : heroName === "about"
+    ? homeAboutImg
+    : heroName === "services"
+    ? homeServicesImg
+    : heroName === "careers"
+    ? homeCareersImg
+    : homeLifeImg;
+
+export const HeroWrapper = styled.section`
+  margin: 70px 0 0 0;
   width: 100%;
-  background-image: ${({ heroImg }) => `url(${heroImg})`};
+  background-image: ${({ heroName }) => `url('${getHeroImageUrl(heroName)}')`};
   background-position: center;
   background-size: cover;
   background-repeat: repeat;
 `;
 
 export const HeroContent = styled.div`
-  max-width: 400px;
+  max-width: 700px;
   padding: 330px 0 80px 0;
   z-index: 1;
 

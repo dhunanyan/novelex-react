@@ -1,8 +1,8 @@
-import homeImg from "../../assets/home/hero-background11.jpg";
-import careersImg from "../../assets/careers/hero-background10.jpg";
-import aboutImg from "../../assets/about/hero-background3.jpg";
-import lifeImg from "../../assets/life/hero-background3.jpg";
-import servicesImg from "../../assets/services/hero-background.jpg";
+import homeImg from "../../assets/home/hero.jpg";
+import careersImg from "../../assets/careers/hero.jpg";
+import aboutImg from "../../assets/about/hero.jpg";
+import lifeImg from "../../assets/life/hero.jpg";
+import servicesImg from "../../assets/services/hero.jpg";
 
 const DIRECTORY_DATA = [
   {

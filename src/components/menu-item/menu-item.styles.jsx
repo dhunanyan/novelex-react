@@ -4,7 +4,6 @@ export const MenuItemContainer = styled.div`
   width: 100%;
   height: 290px;
   background-color: #292929;
-  margin: 10px;
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
   border: 2px solid rgba(7, 7, 7, 0.12);
@@ -18,6 +17,26 @@ export const MenuItemContainer = styled.div`
   cursor: pointer;
   transition: all 0.3s ease;
   overflow: hidden;
+
+  @keyframes iconRotate {
+    0% {
+    }
+    0.0001% {
+      transform: rotate(0deg) scale(1);
+    }
+    25% {
+      transform: rotate(25deg) scale(1.25);
+    }
+    50% {
+      transform: rotate(0deg) scale(1.4);
+    }
+    75% {
+      transform: rotate(-25deg) scale(1.25);
+    }
+    100% {
+      transform: rotate(0deg) scale(1);
+    }
+  }
 
   &:hover {
     height: 300px;
@@ -35,14 +54,11 @@ export const MenuItemContainer = styled.div`
     .icon {
       background-position: -120px;
       transition: all 0.3s ease;
-    }
 
-    i {
-      background: linear-gradient(90deg, #ff7e7e, #ff4848);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      opacity: 1;
-      transition: all 0.3s ease;
+      svg {
+        animation: iconRotate 0.3s ease-out;
+        transition: all 0.3s ease;
+      }
     }
   }
 `;

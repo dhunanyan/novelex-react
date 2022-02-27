@@ -37,15 +37,15 @@ const MenuItem = ({
 
       <MenuItemContent className="icon" color={color}>
         {name === "LifeIcon" ? (
-          <LifeIcon style={{ fontSize: "36px" }} />
+          <LifeIcon style={{ fontSize: "40px" }} />
         ) : name === "CareersIcon" ? (
-          <CareersIcon style={{ fontSize: "36px" }} />
+          <CareersIcon style={{ fontSize: "40px" }} />
         ) : name === "ServicesIcon" ? (
-          <ServicesIcon style={{ fontSize: "36px" }} />
+          <ServicesIcon style={{ fontSize: "40px" }} />
         ) : name === "HomeIcon" ? (
-          <HomeIcon style={{ fontSize: "36px" }} />
+          <HomeIcon style={{ fontSize: "40px" }} />
         ) : (
-          <AboutIcon style={{ fontSize: "36px" }} />
+          <AboutIcon style={{ fontSize: "40px" }} />
         )}
       </MenuItemContent>
       <MenuItemTitle className="title">{title}</MenuItemTitle>

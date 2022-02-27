@@ -55,20 +55,44 @@ export const addCollectionAndDocuments = async (
   return await batch.commit();
 };
 
-export const convertCollectionsSnapshotToMap = (collections) => {
+export const convertSectionsSnapshotToMap = (collections) => {
   const transformedCollection = collections.docs.map((doc) => {
-    const { title, items } = doc.data();
+    const { routeName, title, hero, cards, largeCards, colors, key } =
+      doc.data();
 
     return {
-      routeName: encodeURI(title.toLowerCase()),
+      routeName,
       id: doc.id,
+      hero,
+      cards,
+      largeCards,
+      colors,
       title,
-      items,
+      key,
     };
   });
 
   return transformedCollection.reduce((accumulator, collection) => {
-    accumulator[collection.title.toLowerCase()] = collection;
+    accumulator[collection.key] = collection;
+    return accumulator;
+  }, {});
+};
+
+export const convertCardsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
+    const { cardId, descr, page, name, title } = doc.data();
+
+    return {
+      cardId,
+      descr,
+      name,
+      title,
+      page,
+    };
+  });
+
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.name] = collection;
     return accumulator;
   }, {});
 };

@@ -71,7 +71,8 @@ export const HeaderContainer = styled.div`
 `;
 
 export const HeaderImg = styled(Link)`
-  max-width: 70px;
+  padding: 8px;
+  max-width: 64px;
   position: relative;
   z-index: 9999;
 `;

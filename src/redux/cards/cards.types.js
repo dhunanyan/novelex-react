@@ -1,0 +1,7 @@
+const CardsActionTypes = {
+  FETCH_CARDS_START: "FETCH_CARDS_START",
+  FETCH_CARDS_SUCCESS: "FETCH_CARDS_SUCCESS",
+  FETCH_CARDS_FAILURE: "FETCH_CARDS_FAILURE",
+};
+
+export default CardsActionTypes;
