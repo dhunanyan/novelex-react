@@ -1,75 +1,119 @@
-import React, { useState, useEffect } from "react";
-import results from "./results";
+import React, { useEffect, useState } from "react";
+
+import firebase from "firebase/compat/app";
 import { firestore } from "./firebase/firebase.utils";
+import "firebase/compat/storage";
 
 import FormInput from "./components/form-input/form-input.component";
 import CustomButton from "./components/custom-button/custom-button.component";
 
-import { LARGE_CARDS, CARDS } from "./redux/sections/sections.data";
-
-const ResultAdd = () => {
-  const [student, setStudent] = useState({
-    studentName: "",
-    studentGrade: "",
-    studentUnit: "",
+const ResultAdd = ({ sectionId, cardsObjLength }) => {
+  const storage = firebase.storage();
+  const [image, setImage] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [card, setCard] = useState({
+    cardId: cardsObjLength,
+    page: sectionId,
+    descr: "",
+    name: "",
+    title: "",
+    imageUrl: "",
   });
-  const { studentName, studentGrade, studentUnit } = student;
+  const { descr, name, title } = card;
 
   const handleChange = (event) => {
     const { value, name } = event.target;
 
-    setStudent({ ...student, [name]: value });
+    setCard({ ...card, [name]: value });
   };
 
-  const postDataHandler = (e) => {
-    e.preventDefault();
-    const batch = firestore.batch();
-    const docRef = firestore.collection("cards");
+  const handleImageChange = (event) => {
+    if (event.target.files[0]) {
+      setImage(event.target.files[0]);
+    }
+  };
 
-    CARDS.forEach((card) => {
-      docRef.add(card);
-    });
+  const handleImageUpload = () => {
+    const uploadTask = storage
+      .ref(`images/${sectionId}/${image.name}`)
+      .put(image);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
 
-    batch.commit().then(() => {
-      alert("Card added");
-    });
+        setProgress(progress);
+      },
+      (error) => {
+        alert("Oops something went wrong with uploading image");
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref(`images/${sectionId}/${image.name}`)
+          .getDownloadURL()
+          .then((url) => {
+            alert(url);
+            setCard({ ...card, imageUrl: url });
+            console.log(card);
+          });
+      }
+    );
   };
 
   useEffect(() => {
-    results
-      .get("/student.json")
-      .then((res) => res.data)
-      .then((data) => console.log(data));
-  }, []);
+    if (progress === 100) {
+      const postDataHandler = (event) => {
+        event.preventDefault();
+        handleImageUpload();
+        const batch = firestore.batch();
+        const docRef = firestore.collection("cards");
+
+        docRef.add(card);
+
+        batch.commit().then(() => {
+          alert("Card added");
+        });
+      };
+    }
+  }, [progress]);
 
   return (
     <form onSubmit={postDataHandler}>
       <FormInput
-        name="studentName"
+        name="title"
         type="text"
-        value={studentName}
+        value={title}
         onChange={handleChange}
         required
         autoComplete="on"
-        placeholder="name"
+        placeholder="Title"
       />
       <FormInput
-        name="studentGrade"
+        name="descr"
         type="text"
-        value={studentGrade}
+        value={descr}
         onChange={handleChange}
         required
         autoComplete="on"
-        placeholder="Grade"
+        placeholder="Description"
       />
       <FormInput
-        name="studentUnit"
+        name="name"
         type="text"
-        value={studentUnit}
+        value={name}
         onChange={handleChange}
         required
         autoComplete="on"
-        placeholder="Unit"
+        placeholder="Card shorten name"
+      />
+      <FormInput
+        name="image"
+        type="file"
+        onChange={handleImageChange}
+        required
       />
 
       <CustomButton type="submit">POST</CustomButton>

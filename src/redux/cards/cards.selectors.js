@@ -9,6 +9,10 @@ export const selectCards = createSelector(
   (cardsCollection) => cardsCollection.cards
 );
 
+export const selectCardsLength = createSelector([selectCards], (cards) =>
+  cards ? Object.keys(cards).map((key) => cards[key]).length : null
+);
+
 export const selectCardsObj = memoize((sectionId) =>
   createSelector([selectCards], (cards) =>
     cards

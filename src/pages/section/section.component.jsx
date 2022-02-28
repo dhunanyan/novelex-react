@@ -5,11 +5,15 @@ import { useParams, Route, Routes, useNavigate } from "react-router-dom";
 import Hero from "../../components/hero/hero.component";
 import { Card } from "../../components/card/card.component";
 import LargeCard from "../../components/large-card/large-card.component";
+import ResultAdd from "../../ResultAdd";
 
 import { selectSection } from "../../redux/sections/sections.selectors";
 import { CardsContainer, CardsWrapper, AddButton } from "./section.styles";
 import { fetchCardsStart } from "../../redux/cards/cards.actions";
-import { selectCardsObj } from "../../redux/cards/cards.selectors";
+import {
+  selectCardsObj,
+  selectCardsLength,
+} from "../../redux/cards/cards.selectors";
 
 import { HiPlusSm as Plus } from "react-icons/hi";
 
@@ -18,7 +22,8 @@ const SectionPage = ({ currentUser }) => {
   const section = useSelector(selectSection(sectionId));
   const dispatch = useDispatch();
   const cardsObj = useSelector(selectCardsObj(sectionId));
-  console.log(sectionId);
+  const cardsObjLength = useSelector(selectCardsLength);
+  console.log(cardsObjLength);
 
   const { hero, largeCards, colors } = section;
 
@@ -54,6 +59,8 @@ const SectionPage = ({ currentUser }) => {
           </AddButton>
         ) : null}
       </CardsWrapper>
+
+      <ResultAdd cardsObjLength={cardsObjLength} sectionId={sectionId} />
 
       <CardsWrapper>
         <LargeCard {...largeCards} {...colors} />
