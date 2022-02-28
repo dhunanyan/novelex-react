@@ -7,6 +7,24 @@ import "firebase/compat/storage";
 import FormInput from "./components/form-input/form-input.component";
 import CustomButton from "./components/custom-button/custom-button.component";
 
+export const handleImageUpload = async (sectionId, image) => {
+  try {
+    const storage = firebase.storage();
+    const uploadTaskSnapshot = await storage
+      .ref(`images/${sectionId}/${image.name}`)
+      .put(image);
+    let progress =
+      (uploadTaskSnapshot.bytesTransferred / uploadTaskSnapshot.totalBytes) *
+      100;
+    let url = await uploadTaskSnapshot
+      .ref(`images/${sectionId}/${image.name}`)
+      .getDownloadURL();
+    return { url, progress };
+  } catch (error) {
+    return error;
+  }
+};
+
 const ResultAdd = ({ sectionId, cardsObjLength }) => {
   const storage = firebase.storage();
   const [image, setImage] = useState(null);
@@ -33,52 +51,17 @@ const ResultAdd = ({ sectionId, cardsObjLength }) => {
     }
   };
 
-  const handleImageUpload = () => {
-    const uploadTask = storage
-      .ref(`images/${sectionId}/${image.name}`)
-      .put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
+  const postDataHandler = (event) => {
+    event.preventDefault();
+    handleImageUpload();
+    const batch = firestore.batch();
+    const docRef = firestore.collection("cards");
 
-        setProgress(progress);
-      },
-      (error) => {
-        alert("Oops something went wrong with uploading image");
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref(`images/${sectionId}/${image.name}`)
-          .getDownloadURL()
-          .then((url) => {
-            alert(url);
-            setCard({ ...card, imageUrl: url });
-            console.log(card);
-          });
-      }
-    );
+    docRef.add(card);
+    batch.commit().then(() => {
+      alert("Card added");
+    });
   };
-
-  useEffect(() => {
-    if (progress === 100) {
-      const postDataHandler = (event) => {
-        event.preventDefault();
-        handleImageUpload();
-        const batch = firestore.batch();
-        const docRef = firestore.collection("cards");
-
-        docRef.add(card);
-
-        batch.commit().then(() => {
-          alert("Card added");
-        });
-      };
-    }
-  }, [progress]);
 
   return (
     <form onSubmit={postDataHandler}>

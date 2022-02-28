@@ -6,15 +6,21 @@ const INITIAL_STATE = {
   isImageUploading: false,
   errorPostMessage: null,
   errorImageMessage: null,
+  imageData: null,
 };
 
 const addCardReducer = (state = INITIAL_STATE, action) => {
   switch (action.types) {
     case AddCardActionTypes.CARD_ADD_START:
+      return {
+        ...state,
+        isImageUploading: true,
+      };
     case AddCardActionTypes.IMAGE_ADD_START:
       return {
         ...state,
         isImageUploading: true,
+        imageData: action.payload,
       };
     case AddCardActionTypes.CARD_ADD_SUCCESS:
       return {

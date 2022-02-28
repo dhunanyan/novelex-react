@@ -14,13 +14,14 @@ export const addCardsFailure = (errorMessage) => ({
   payload: errorMessage,
 });
 
-export const addImageStart = () => ({
+export const addImageStart = ({ sectionId, image, additionalData }) => ({
   type: AddCardActionTypes.IMAGE_ADD_START,
+  payload: { sectionId, image, additionalData },
 });
 
-export const addImageSuccess = (imageUploadProgress) => ({
+export const addImageSuccess = ({ url }) => ({
   type: AddCardActionTypes.IMAGE_ADD_SUCCESS,
-  payload: imageUploadProgress,
+  payload: { url },
 });
 
 export const addImageFailure = (errorMessage) => ({
