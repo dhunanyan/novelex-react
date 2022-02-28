@@ -62,14 +62,18 @@ export const CardTopSheet = styled(animated.div)`
   ${CardSheet}
   background-color: #f1f1f1;
 
-  p {
-    font-size: 18px;
-    line-height: 22px;
-    text-align: justify;
-    color: #424242;
+  div {
+    pointer-events: none;
 
-    span {
-      font-size: 32px;
+    p {
+      font-size: 18px;
+      line-height: 22px;
+      text-align: justify;
+      color: #424242;
+
+      span {
+        font-size: 32px;
+      }
     }
   }
 `;

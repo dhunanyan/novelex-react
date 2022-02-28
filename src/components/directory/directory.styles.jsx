@@ -38,7 +38,7 @@ const chooseDirectoryItemType = ({ title }) => {
 };
 
 export const DirectoryContainer = styled(Container)`
-  margin: 70px 0 0 0;
+  margin-top: 70px;
   padding: 60px;
 
   @media (max-width: 768px) {
@@ -61,7 +61,7 @@ export const DirectoryMenu = styled.div`
     minmax(90px, 1fr)
     minmax(90px, 1fr)
     minmax(90px, 1fr);
-  grid-template-rows: minmax(150px, 300px) minmax(275px, 450px);
+  grid-template-rows: minmax(150px, 270px) minmax(235px, 270px);
   grid-template-areas:
     "home home home about about about"
     "services services careers careers life life";

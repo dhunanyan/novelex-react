@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MenuItemContainer = styled.div`
   width: 100%;
-  height: 290px;
+  height: 260px;
   background-color: #292929;
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
@@ -39,7 +39,7 @@ export const MenuItemContainer = styled.div`
   }
 
   &:hover {
-    height: 300px;
+    height: 270px;
 
     div:first-of-type > div {
       transform: scale(1.1);

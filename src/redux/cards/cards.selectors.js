@@ -9,8 +9,24 @@ export const selectCards = createSelector(
   (cardsCollection) => cardsCollection.cards
 );
 
-export const selectCardsForPreview = createSelector([selectCards], (cards) =>
-  cards ? Object.keys(cards).map((key) => cards[key]) : []
+export const selectCardsObj = memoize((sectionId) =>
+  createSelector([selectCards], (cards) =>
+    cards
+      ? Object.entries(cards).filter((entrie, i) => {
+          return entrie[1].page === sectionId ? true : false;
+        })
+      : []
+  )
+);
+
+export const selectCardsForPreview = memoize((sectionId) =>
+  createSelector([selectCards], (cards) =>
+    cards
+      ? Object.values(cards).filter((card) =>
+          card.page === sectionId ? card : false
+        )
+      : []
+  )
 );
 
 export const selectCard = memoize((cardUrlParam) =>

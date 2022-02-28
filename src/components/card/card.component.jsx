@@ -97,12 +97,14 @@ export const TopSheet = ({ y, set, onActive, onProgress, cardDescr }) => {
 
   return (
     <CardTopSheet style={{ y }} {...bind()}>
-      <p>
-        <span>
-          <Quots />
-        </span>
-        {cardDescr}
-      </p>
+      <div>
+        <p>
+          <span>
+            <Quots />
+          </span>
+          {cardDescr}
+        </p>
+      </div>
     </CardTopSheet>
   );
 };
