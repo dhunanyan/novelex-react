@@ -110,7 +110,7 @@ export const CardResizeIcon = styled.div`
   pointer-events: none;
   font-size: 30px;
   position: absolute;
-  bottom: 256px;
+  bottom: 275px;
   right: 24px;
   z-index: 4;
   color: #535353;

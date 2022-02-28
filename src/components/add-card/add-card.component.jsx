@@ -31,7 +31,6 @@ const CardAdd = ({ sectionId, fill, opacity, handleCloseButton }) => {
   const cardsObjLength = useSelector(selectCardsLength);
   const [image, setImage] = useState(null);
 
-  const { descr, name, title } = card;
   const [progress, setProgress] = useState(0);
   const [card, setCard] = useState({
     cardId: cardsObjLength + 1,
@@ -42,6 +41,7 @@ const CardAdd = ({ sectionId, fill, opacity, handleCloseButton }) => {
     imageUrl: "",
   });
 
+  const { descr, name, title } = card;
   const handleImageUpload = () => {
     const storage = firebase.storage();
     const uploadTask = storage
