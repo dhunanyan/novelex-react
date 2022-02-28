@@ -1,19 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Route, Routes, useNavigate } from "react-router-dom";
 
 import Hero from "../../components/hero/hero.component";
 import { Card } from "../../components/card/card.component";
 import LargeCard from "../../components/large-card/large-card.component";
-import ResultAdd from "../../ResultAdd";
+import CardAdd from "../../components/add-card/add-card.component";
 
 import { selectSection } from "../../redux/sections/sections.selectors";
 import { CardsContainer, CardsWrapper, AddButton } from "./section.styles";
 import { fetchCardsStart } from "../../redux/cards/cards.actions";
-import {
-  selectCardsObj,
-  selectCardsLength,
-} from "../../redux/cards/cards.selectors";
+import { selectCardsObj } from "../../redux/cards/cards.selectors";
 
 import { HiPlusSm as Plus } from "react-icons/hi";
 
@@ -22,15 +19,17 @@ const SectionPage = ({ currentUser }) => {
   const section = useSelector(selectSection(sectionId));
   const dispatch = useDispatch();
   const cardsObj = useSelector(selectCardsObj(sectionId));
-  const cardsObjLength = useSelector(selectCardsLength);
-  console.log(cardsObjLength);
-
   const { hero, largeCards, colors } = section;
+  const [isShownCardAdd, setIsShownCardAdd] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCardsStart());
   }, [dispatch]);
   const navigate = useNavigate();
+
+  const handleCloseButton = () => {
+    return setIsShownCardAdd(false);
+  };
 
   return (
     <div>
@@ -50,8 +49,14 @@ const SectionPage = ({ currentUser }) => {
             }
           })}
         </CardsContainer>
+
         {currentUser ? (
-          <AddButton>
+          <AddButton
+            {...colors}
+            onClick={() => {
+              setIsShownCardAdd(true);
+            }}
+          >
             <p>Add Card</p>
             <span>
               <Plus />
@@ -60,7 +65,13 @@ const SectionPage = ({ currentUser }) => {
         ) : null}
       </CardsWrapper>
 
-      <ResultAdd cardsObjLength={cardsObjLength} sectionId={sectionId} />
+      {isShownCardAdd ? (
+        <CardAdd
+          sectionId={sectionId}
+          {...colors}
+          handleCloseButton={handleCloseButton}
+        />
+      ) : null}
 
       <CardsWrapper>
         <LargeCard {...largeCards} {...colors} />

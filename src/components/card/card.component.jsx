@@ -26,33 +26,6 @@ import {
   CardTopSheet,
 } from "./card.styles";
 
-const getCardImage = (cardName) =>
-  cardName === "purpose"
-    ? purpose
-    : cardName === "values"
-    ? values
-    : cardName === "mission"
-    ? mission
-    : cardName === "languages"
-    ? languages
-    : cardName === "digital"
-    ? digital
-    : cardName === "training"
-    ? training
-    : cardName === "values"
-    ? values
-    : cardName === "language"
-    ? language
-    : cardName === "digitalC"
-    ? digitalC
-    : cardName === "hire"
-    ? hire
-    : cardName === "diversity"
-    ? diversity
-    : cardName === "learning"
-    ? learning
-    : supporting;
-
 const TOP_THRESHOLD = 190;
 const BOTTOM_THRESHOLD = 241;
 
@@ -160,7 +133,7 @@ export const BottomSheet = ({ y, set, onActive, onProgress, fill }) => {
   );
 };
 
-export const Card = ({ name, title, descr, fill, opacity }) => {
+export const Card = ({ name, title, descr, fill, opacity, imageUrl }) => {
   const [active, setActive] = useState({ top: false, bottom: false });
   // const [expanded, setExpanded] = useState(false);
   const [{ y: topY }, topSet] = useSpring(() => ({
@@ -205,7 +178,7 @@ export const Card = ({ name, title, descr, fill, opacity }) => {
   return (
     <CardContainer fill={fill} cardName={name}>
       <CardAvatar
-        src={getCardImage(name)}
+        src={imageUrl}
         style={{ y: avatarY(), transform: avatarScale() }}
       />
       <CardTitle

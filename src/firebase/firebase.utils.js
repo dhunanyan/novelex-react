@@ -80,7 +80,7 @@ export const convertSectionsSnapshotToMap = (collections) => {
 
 export const convertCardsSnapshotToMap = (collections) => {
   const transformedCollection = collections.docs.map((doc) => {
-    const { cardId, descr, page, name, title } = doc.data();
+    const { cardId, descr, page, name, title, imageUrl } = doc.data();
 
     return {
       cardId,
@@ -88,6 +88,7 @@ export const convertCardsSnapshotToMap = (collections) => {
       name,
       title,
       page,
+      imageUrl,
     };
   });
 

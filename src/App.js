@@ -9,7 +9,6 @@ import Signin from "./pages/sign-in/sign-in.component";
 import Header from "./components/header/header.component";
 import SectionPageContainer from "./pages/section/section.container";
 import HeaderQuery from "./components/header-query/header-query.component";
-import ResultAdd from "./ResultAdd";
 
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.actions";
