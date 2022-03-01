@@ -126,9 +126,8 @@ export const BottomSheet = ({ y, set, onActive, onProgress, fill }) => {
   );
 };
 
-export const Card = ({ card, fill, opacity }) => {
+export const Card = ({ card, fill, opacity, index, length }) => {
   const { name, title, descr, imageUrl, page } = card;
-  const cardsObj = useSelector(selectCardsObj(page));
   const [active, setActive] = useState({ top: false, bottom: false });
   // const [expanded, setExpanded] = useState(false);
   const [{ y: topY }, topSet] = useSpring(() => ({
@@ -186,7 +185,7 @@ export const Card = ({ card, fill, opacity }) => {
   };
 
   return (
-    <CardContainer fill={fill} cardName={name}>
+    <CardContainer fill={fill} cardName={name} length={length} index={index}>
       <CardDelete fill={fill} onClick={handleOnClick}>
         <Times />
       </CardDelete>

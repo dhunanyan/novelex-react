@@ -10,7 +10,10 @@ import CardAdd from "../../components/add-card/add-card.component";
 import { selectSection } from "../../redux/sections/sections.selectors";
 import { CardsContainer, CardsWrapper, AddButton } from "./section.styles";
 import { fetchCardsStart } from "../../redux/cards/cards.actions";
-import { selectCardsObj } from "../../redux/cards/cards.selectors";
+import {
+  selectCardsLength,
+  selectCardsObj,
+} from "../../redux/cards/cards.selectors";
 
 import { HiPlusSm as Plus } from "react-icons/hi";
 
@@ -19,6 +22,7 @@ const SectionPage = ({ currentUser }) => {
   const section = useSelector(selectSection(sectionId));
   const dispatch = useDispatch();
   const cardsObj = useSelector(selectCardsObj(sectionId));
+
   const { hero, largeCards, colors } = section;
   const [isShownCardAdd, setIsShownCardAdd] = useState(false);
 
@@ -37,10 +41,18 @@ const SectionPage = ({ currentUser }) => {
 
       <CardsWrapper>
         <CardsContainer cardNames={Object.keys(Object.fromEntries(cardsObj))}>
-          {cardsObj.map((card) => {
+          {cardsObj.map((card, i, arr) => {
             if (card[1]) {
               if (card[1].page === sectionId) {
-                return <Card key={card[1].name} card={card[1]} {...colors} />;
+                return (
+                  <Card
+                    key={card[1].name}
+                    index={i}
+                    length={arr.length}
+                    card={card[1]}
+                    {...colors}
+                  />
+                );
               } else {
                 return null;
               }

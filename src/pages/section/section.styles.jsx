@@ -7,11 +7,13 @@ export const CardsContainer = styled(Container)`
   padding-bottom: 60px;
   display: grid;
   grid-gap: 30px;
-  grid-template-areas: ${({ cardNames }) => `' ${cardNames.join(" ")} '`};
   grid-template-columns:
-    minmax(270px, 1fr)
-    minmax(270px, 1fr)
-    minmax(270px, 1fr);
+    minmax(135px, 1fr)
+    minmax(135px, 1fr)
+    minmax(135px, 1fr)
+    minmax(135px, 1fr)
+    minmax(135px, 1fr)
+    minmax(135px, 1fr);
   grid-template-rows: minmax(500px, 1fr);
 `;
 

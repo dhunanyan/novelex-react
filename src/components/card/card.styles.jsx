@@ -16,6 +16,39 @@ const CardSheet = css`
     0 24px 80px rgba(0, 0, 0, 0.06);
 `;
 
+const getGridCols = (index, length) => {
+  const maxPlaces = length % 3 === 0 ? length : length - (length % 3) + 3;
+
+  if (maxPlaces - index === 1) {
+    if (maxPlaces % length === 0) {
+      return "5 / 7";
+    }
+  } else if (maxPlaces - index === 2) {
+    if (maxPlaces % length === 1) {
+      return "4 / 7";
+    } else if (maxPlaces % length === 0) {
+      return "3 / 5";
+    }
+  }
+  if (maxPlaces - index === 3) {
+    if (maxPlaces % length === 2) {
+      return "1 / 7";
+    } else if (maxPlaces % length === 1) {
+      return "1 / 4";
+    } else if (maxPlaces % length === 0) {
+      return "1 / 3";
+    }
+  } else {
+    if (index % 3 === 0) {
+      return "1 / 3";
+    } else if (index % 3 === 1) {
+      return "3 / 5";
+    } else if (index % 3 === 2) {
+      return "5 / 7";
+    }
+  }
+};
+
 export const CardContainer = styled.div`
   font-weight: 600;
   align-items: center;
@@ -31,7 +64,7 @@ export const CardContainer = styled.div`
   overflow: hidden;
   position: relative;
   padding: 20px;
-  grid-area: ${({ cardName }) => cardName};
+  grid-column: ${({ length, index }) => getGridCols(length, index)};
 `;
 
 export const CardAvatar = styled(animated.img)`
