@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { animated } from "react-spring";
+import { CardCloseIcon } from "../add-card/add-card.styles";
 
 const CardSheet = css`
   border-radius: 32px;
@@ -113,5 +114,29 @@ export const CardButton = styled(Link)`
   &:hover {
     color: ${({ fill }) => fill};
     background-color: #f1f1f1;
+  }
+`;
+
+export const CardDelete = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  color: #f1f1f1;
+  overflow: hidden;
+  transition: all 350ms ease-out;
+  cursor: pointer;
+
+  &:hover {
+    svg {
+      border-radius: 50%;
+      color: ${({ fill }) => `${fill}`};
+      background-color: #f1f1f1;
+    }
+  }
+
+  svg {
+    transition: all 350ms ease-out;
+    font-size: 40px;
   }
 `;

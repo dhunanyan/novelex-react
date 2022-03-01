@@ -40,7 +40,7 @@ const SectionPage = ({ currentUser }) => {
           {cardsObj.map((card) => {
             if (card[1]) {
               if (card[1].page === sectionId) {
-                return <Card key={card[1].name} {...card[1]} {...colors} />;
+                return <Card key={card[1].name} card={card[1]} {...colors} />;
               } else {
                 return null;
               }

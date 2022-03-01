@@ -13,3 +13,13 @@ export const fetchCardsFailure = (errorMessage) => ({
   type: CardsActionTypes.FETCH_CARDS_FAILURE,
   payload: errorMessage,
 });
+
+export const deleteCard = (card) => ({
+  type: CardsActionTypes.DELETE_CARD,
+  payload: card,
+});
+
+export const addingCard = (card) => ({
+  type: CardsActionTypes.ADD_CARD,
+  payload: card,
+});

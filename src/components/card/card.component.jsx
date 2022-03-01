@@ -1,21 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useSpring, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
-import purpose from "../../assets/about/purpose.jpg";
-import values from "../../assets/about/values.jpg";
-import mission from "../../assets/about/mission.jpg";
-import languages from "../../assets/services/languages.jpg";
-import digital from "../../assets/services/digital.jpg";
-import training from "../../assets/services/training.jpg";
-import language from "../../assets/careers/language.jpg";
-import digitalC from "../../assets/careers/digital.jpg";
-import hire from "../../assets/careers/hire.jpg";
-import diversity from "../../assets/life/diversity.jpg";
-import learning from "../../assets/life/learning.jpg";
-import supporting from "../../assets/life/supporting.jpg";
+import firebase from "firebase/compat/app";
 
 import { IoIosQuote as Quots } from "react-icons/io";
-import { FaHandPointDown as Hand } from "react-icons/fa";
+import { FaHandPointDown as Hand, FaTimes as Times } from "react-icons/fa";
 
 import {
   CardButton,
@@ -24,7 +13,11 @@ import {
   CardBottomSheet,
   CardTitle,
   CardTopSheet,
+  CardDelete,
 } from "./card.styles";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCardsObj } from "../../redux/cards/cards.selectors";
+import { deleteCard, deleteCardStart } from "../../redux/cards/cards.actions";
 
 const TOP_THRESHOLD = 190;
 const BOTTOM_THRESHOLD = 241;
@@ -133,7 +126,9 @@ export const BottomSheet = ({ y, set, onActive, onProgress, fill }) => {
   );
 };
 
-export const Card = ({ name, title, descr, fill, opacity, imageUrl }) => {
+export const Card = ({ card, fill, opacity }) => {
+  const { name, title, descr, imageUrl, page } = card;
+  const cardsObj = useSelector(selectCardsObj(page));
   const [active, setActive] = useState({ top: false, bottom: false });
   // const [expanded, setExpanded] = useState(false);
   const [{ y: topY }, topSet] = useSpring(() => ({
@@ -175,8 +170,26 @@ export const Card = ({ name, title, descr, fill, opacity, imageUrl }) => {
     });
   };
 
+  const dispatch = useDispatch();
+
+  const handleOnClick = () => {
+    dispatch(deleteCard(card));
+
+    firebase
+      .firestore()
+      .collection("cards")
+      .where("name", "==", name)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.docs[0].ref.delete();
+      });
+  };
+
   return (
     <CardContainer fill={fill} cardName={name}>
+      <CardDelete fill={fill} onClick={handleOnClick}>
+        <Times />
+      </CardDelete>
       <CardAvatar
         src={imageUrl}
         style={{ y: avatarY(), transform: avatarScale() }}

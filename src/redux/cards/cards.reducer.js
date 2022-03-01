@@ -1,9 +1,12 @@
 import CardsActionTypes from "./cards.types";
+import { addCard, removeCard } from "./cards.utils";
 
 const INITIAL_STATE = {
   cards: null,
   isFetching: false,
-  errorMessage: undefined,
+  errorMessageFetch: undefined,
+  errorMessageDelete: undefined,
+  itemToDeleteName: "",
 };
 
 const cardsReducer = (state = INITIAL_STATE, action) => {
@@ -23,7 +26,17 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        errorMessage: action.payload,
+        errorMessageFetch: action.payload,
+      };
+    case CardsActionTypes.DELETE_CARD:
+      return {
+        ...state,
+        cards: removeCard(state.cards, action.payload),
+      };
+    case CardsActionTypes.ADD_CARD:
+      return {
+        ...state,
+        cards: addCard(state.cards, action.payload),
       };
     default:
       return state;

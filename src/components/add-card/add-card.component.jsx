@@ -4,28 +4,30 @@ import firebase from "firebase/compat/app";
 import { firestore } from "../../firebase/firebase.utils";
 import "firebase/compat/storage";
 
-import FormInput from "../form-input/form-input.component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { selectCardsLength } from "../../redux/cards/cards.selectors";
+import {
+  selectCards,
+  selectCardsLength,
+} from "../../redux/cards/cards.selectors";
 
 import { FaTimes as Times } from "react-icons/fa";
 import { BsTextareaResize as Resize } from "react-icons/bs";
 
 import {
   CardAddContainer,
-  InputFile,
   FormTextArea,
   Buttons,
   SubmitButton,
   JustAButton,
-  ProgressChild,
   CardCloseIcon,
   CardResizeIcon,
   CardInput,
 } from "./add-card.styles";
 
 import "./add-card.styles.scss";
+import { addCard } from "../../redux/cards/cards.utils";
+import { addingCard } from "../../redux/cards/cards.actions";
 
 const CardAdd = ({ sectionId, fill, opacity, handleCloseButton }) => {
   const cardsObjLength = useSelector(selectCardsLength);
@@ -50,7 +52,6 @@ const CardAdd = ({ sectionId, fill, opacity, handleCloseButton }) => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log(snapshot.bytesTransferred);
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
@@ -71,8 +72,11 @@ const CardAdd = ({ sectionId, fill, opacity, handleCloseButton }) => {
     );
   };
 
+  const dispatch = useDispatch();
+
   const postDataHandler = async (event) => {
     event.preventDefault();
+    dispatch(addingCard(card));
     const batch = firestore.batch();
     const docRef = firestore.collection("cards");
     docRef.add(card);
