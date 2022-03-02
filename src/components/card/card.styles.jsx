@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { animated } from "react-spring";
-import { CardCloseIcon } from "../add-card/add-card.styles";
 
 const CardSheet = css`
   border-radius: 32px;
@@ -16,40 +15,8 @@ const CardSheet = css`
     0 24px 80px rgba(0, 0, 0, 0.06);
 `;
 
-const getGridCols = (index, length) => {
-  const maxPlaces = length % 3 === 0 ? length : length - (length % 3) + 3;
-
-  if (maxPlaces - index === 1) {
-    if (maxPlaces % length === 0) {
-      return "5 / 7";
-    }
-  } else if (maxPlaces - index === 2) {
-    if (maxPlaces % length === 1) {
-      return "4 / 7";
-    } else if (maxPlaces % length === 0) {
-      return "3 / 5";
-    }
-  }
-  if (maxPlaces - index === 3) {
-    if (maxPlaces % length === 2) {
-      return "1 / 7";
-    } else if (maxPlaces % length === 1) {
-      return "1 / 4";
-    } else if (maxPlaces % length === 0) {
-      return "1 / 3";
-    }
-  } else {
-    if (index % 3 === 0) {
-      return "1 / 3";
-    } else if (index % 3 === 1) {
-      return "3 / 5";
-    } else if (index % 3 === 2) {
-      return "5 / 7";
-    }
-  }
-};
-
 export const CardContainer = styled.div`
+  margin: ${({ margin }) => `0 ${margin} 0 0`};
   font-weight: 600;
   align-items: center;
   background-color: ${({ fill }) => fill};
@@ -63,14 +30,20 @@ export const CardContainer = styled.div`
   height: 500px;
   overflow: hidden;
   position: relative;
-  padding: 20px;
-  grid-column: ${({ length, index }) => getGridCols(length, index)};
+  padding: 20px 40px;
+  width: 100%;
+  max-width: ${({ width }) => width};
 `;
 
-export const CardAvatar = styled(animated.img)`
+export const CardAvatar = styled(animated.div)`
   border-radius: 30px;
   transform-origin: 50% 0;
-  width: 80%;
+  width: 100%;
+  height: calc(100% - 240px);
+  background-image: ${({ imageUrl }) => `url('${imageUrl}')`};
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat;
   user-select: none;
   -webkit-user-select: none;
   will-change: transform;
@@ -95,6 +68,7 @@ export const CardTitle = styled(animated.h2)`
 export const CardTopSheet = styled(animated.div)`
   ${CardSheet}
   background-color: #f1f1f1;
+  overflow: hidden;
 
   div {
     pointer-events: none;
@@ -110,6 +84,16 @@ export const CardTopSheet = styled(animated.div)`
       }
     }
   }
+`;
+
+export const CardTopSheetLayer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  overflow: hidden;
 `;
 
 export const CardBottomSheet = styled(animated.div)`
@@ -150,26 +134,48 @@ export const CardButton = styled(Link)`
   }
 `;
 
-export const CardDelete = styled.div`
+export const CardButtonsContainer = styled.div`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 20px;
+  right: 20px;
   z-index: 3;
-  color: #f1f1f1;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+`;
+
+export const CardDeleteEdit = css`
   overflow: hidden;
-  transition: all 350ms ease-out;
+  transition: all 150ms ease-out;
   cursor: pointer;
+  border-radius: 20px;
+  width: 80px;
+  height: 80px;
+  background: #fff;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+  color: #535353;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
-    svg {
-      border-radius: 50%;
-      color: ${({ fill }) => `${fill}`};
-      background-color: #f1f1f1;
-    }
+    background-color: rgba(255, 255, 255, 0.7);
+    color: ${({ fill }) => fill};
   }
 
   svg {
-    transition: all 350ms ease-out;
-    font-size: 40px;
+    transition: all 150ms ease-out;
+    font-size: 60px;
   }
+`;
+
+export const CardDelete = styled.div`
+  ${CardDeleteEdit}
+`;
+
+export const CardEdit = styled.div`
+  ${CardDeleteEdit}
 `;

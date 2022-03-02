@@ -24,20 +24,12 @@ import {
   CardLayer,
   CardLayerInner,
   SuccessMessageContainer,
-} from "./add-card.styles";
+} from "./edit-card.styles";
 
-import "./add-card.styles.scss";
+import "./edit-card.styles.scss";
 import { addingCard } from "../../redux/cards/cards.actions";
 
-const CardAdd = ({
-  sectionId,
-  fill,
-  opacity,
-  handleCloseButton,
-  gridRow,
-  gridCol,
-  cardsObjSorted,
-}) => {
+const CardAdd = ({ sectionId, opacity, handleCloseButton }) => {
   const storage = firebase.storage();
   const dispatch = useDispatch();
   const cardsObjLength = useSelector(selectCardsLength);
@@ -51,9 +43,6 @@ const CardAdd = ({
     name: "",
     title: "",
     imageUrl: "",
-    size: 1,
-    gridRow: 1,
-    gridCol: 1,
   });
   const { descr, name, title } = card;
 
@@ -103,8 +92,9 @@ const CardAdd = ({
   };
 
   //INPUTS
-  const handleInputChange = (event) => {
+  const handleChange = (event) => {
     const { value, name } = event.target;
+
     setCard({ ...card, [name]: value });
   };
 
@@ -115,13 +105,6 @@ const CardAdd = ({
     }
   };
 
-  //SELECTS
-  const handleSelectChange = (event) => {
-    const { value, name } = event.target;
-    setCard({ ...card, [name]: Number(value) });
-  };
-
-  console.log(card.gridRow, card.gridCol, card.size);
   return (
     <CardLayer>
       <CardLayerInner onClick={handleCloseButton} />
@@ -139,7 +122,7 @@ const CardAdd = ({
                 name="title"
                 type="text"
                 value={title}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 required
                 autoComplete="on"
                 placeholder="Title"
@@ -148,7 +131,7 @@ const CardAdd = ({
                 name="descr"
                 type="text"
                 value={descr}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 required
                 autoComplete="on"
                 placeholder="Description"
@@ -157,57 +140,11 @@ const CardAdd = ({
                 name="name"
                 type="text"
                 value={name}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 required
                 autoComplete="on"
                 placeholder="Card shorten name"
               />
-              <select
-                name="size"
-                value={card.size}
-                onChange={handleSelectChange}
-              >
-                <option value={1}>Small</option>
-                <option value={2}>Medium</option>
-                <option value={3}>Large</option>
-              </select>
-
-              <select
-                name="gridRow"
-                value={card.gridRow}
-                onChange={handleSelectChange}
-              >
-                {[...Array(cardsObjSorted.length - 1).keys()].map((row, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    Row: {i + 1}
-                  </option>
-                ))}
-              </select>
-
-              <select
-                name="gridCol"
-                value={card.gridCol}
-                onChange={handleSelectChange}
-              >
-                {[
-                  ...Array(
-                    card.size === 1
-                      ? 3
-                      : card.size === 2
-                      ? 2
-                      : card.size === 3
-                      ? 1
-                      : null
-                  ).keys(),
-                ]
-                  .reverse()
-                  .map((col, i) => (
-                    <option key={i} value={i + 1}>
-                      Column: {i + 1}
-                    </option>
-                  ))}
-              </select>
-
               <input
                 className="custom-file-input"
                 name="image"

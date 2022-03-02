@@ -1,10 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useSpring, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
 import firebase from "firebase/compat/app";
 
 import { IoIosQuote as Quots } from "react-icons/io";
-import { FaHandPointDown as Hand, FaTimes as Times } from "react-icons/fa";
+import {
+  FaHandPointDown as Hand,
+  FaTrashAlt as Trash,
+  FaPen as Pen,
+} from "react-icons/fa";
 
 import {
   CardButton,
@@ -14,10 +18,13 @@ import {
   CardTitle,
   CardTopSheet,
   CardDelete,
+  CardTopSheetLayer,
+  CardButtonsContainer,
+  CardEdit,
 } from "./card.styles";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCardsObj } from "../../redux/cards/cards.selectors";
-import { deleteCard, deleteCardStart } from "../../redux/cards/cards.actions";
+import { useDispatch } from "react-redux";
+import {} from "../../redux/cards/cards.selectors";
+import { deleteCard } from "../../redux/cards/cards.actions";
 
 const TOP_THRESHOLD = 190;
 const BOTTOM_THRESHOLD = 241;
@@ -71,6 +78,7 @@ export const TopSheet = ({ y, set, onActive, onProgress, cardDescr }) => {
           {cardDescr}
         </p>
       </div>
+      <CardTopSheetLayer />
     </CardTopSheet>
   );
 };
@@ -126,8 +134,20 @@ export const BottomSheet = ({ y, set, onActive, onProgress, fill }) => {
   );
 };
 
-export const Card = ({ card, fill, opacity, index, length }) => {
-  const { name, title, descr, imageUrl, page } = card;
+export const Card = ({
+  card,
+  fill,
+  opacity,
+  index,
+  length,
+  currentUser,
+  size,
+  gridCol,
+  gridRow,
+  width,
+  margin,
+}) => {
+  const { name, title, descr, imageUrl } = card;
   const [active, setActive] = useState({ top: false, bottom: false });
   // const [expanded, setExpanded] = useState(false);
   const [{ y: topY }, topSet] = useSpring(() => ({
@@ -183,14 +203,32 @@ export const Card = ({ card, fill, opacity, index, length }) => {
         querySnapshot.docs[0].ref.delete();
       });
   };
-
+  console.log(imageUrl);
   return (
-    <CardContainer fill={fill} cardName={name} length={length} index={index}>
-      <CardDelete fill={fill} onClick={handleOnClick}>
-        <Times />
-      </CardDelete>
+    <CardContainer
+      fill={fill}
+      cardName={name}
+      length={length}
+      index={index}
+      size={size}
+      gridCol={gridCol}
+      gridRow={gridRow}
+      currentUser={currentUser}
+      width={width}
+      margin={margin}
+    >
+      {currentUser ? (
+        <CardButtonsContainer>
+          <CardEdit fill={fill} opacity={opacity} onClick={handleOnClick}>
+            <Pen />
+          </CardEdit>{" "}
+          <CardDelete fill={fill} opacity={opacity} onClick={handleOnClick}>
+            <Trash />
+          </CardDelete>
+        </CardButtonsContainer>
+      ) : null}
       <CardAvatar
-        src={imageUrl}
+        imageUrl={imageUrl}
         style={{ y: avatarY(), transform: avatarScale() }}
       />
       <CardTitle

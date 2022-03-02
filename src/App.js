@@ -19,8 +19,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   const [isBodyLocked, setIsBodyLocked] = useState(false);
-  const bodyLockHandle = (isMenuActive) => {
-    setIsBodyLocked(isMenuActive);
+  const bodyLockHandle = (bool) => {
+    setIsBodyLocked(bool);
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className={`wrapper ${isBodyLocked ? "wrapper--locked" : ""}`}>
+    <div className="wrapper">
       <Header bodyLock={bodyLockHandle} />
       <main className="main">
         <Routes>
@@ -41,7 +41,12 @@ const App = () => {
           />
           <Route
             path="/:sectionId"
-            element={<SectionPageContainer currentUser={currentUser} />}
+            element={
+              <SectionPageContainer
+                currentUser={currentUser}
+                bodyLock={bodyLockHandle}
+              />
+            }
           />
           <Route path="/header" element={<HeaderQuery />} />
         </Routes>

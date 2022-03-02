@@ -1,8 +1,6 @@
 .custom-file-input {
   margin: 0;
   width: 100%;
-  height: 60px;
-  position: relative;
 }
 
 .custom-file-input::-webkit-file-upload-button {
@@ -10,8 +8,6 @@
 }
 .custom-file-input::before {
   content: "Choose file";
-  position: relative;
-  width: 100%;
   margin: 10px 0;
   background-color: #303030;
   color: #f1f1f1;
