@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { fetchCardsStart } from "../../redux/cards/cards.actions";
-import { selectCardsObj } from "../../redux/cards/cards.selectors";
+import { selectCards, selectCardsObj } from "../../redux/cards/cards.selectors";
 import {
   AddButton,
   CardsContainer,
@@ -18,18 +18,20 @@ import CardAdd from "../add-card/add-card.component";
 const CardsSection = ({ currentUser, bodyLock, sectionId, colors }) => {
   const dispatch = useDispatch();
   const [isShownCardAdd, setIsShownCardAdd] = useState(false);
+  const cards = useSelector(selectCards);
   const cardsObj = useSelector(selectCardsObj(sectionId));
   const cardsObjSorted = cardsObj.sort((k1, k2) => {
     return k1[1].cardId - k2[1].cardId;
   });
   useEffect(() => {
-    dispatch(fetchCardsStart());
-  }, [dispatch, setIsShownCardAdd]);
+    dispatch(fetchCardsStart(sectionId));
+  }, [dispatch, sectionId]);
 
   const handleCloseButton = () => {
     return setIsShownCardAdd(false);
   };
-
+  const [twoSizeArr, setTwoSizeArr] = useState();
+  console.log(twoSizeArr);
   return (
     <CardsWrapper>
       <CardsContainer cardNames={Object.keys(Object.fromEntries(cardsObj))}>
@@ -45,6 +47,7 @@ const CardsSection = ({ currentUser, bodyLock, sectionId, colors }) => {
                   gridCol={card[1].gridCol}
                 >
                   <Card
+                    twoSizeArr={twoSizeArr}
                     currentUser={currentUser}
                     key={card[1].cardId}
                     index={i}

@@ -1,12 +1,13 @@
 import CardsActionTypes from "./cards.types";
 
-export const fetchCardsStart = () => ({
+export const fetchCardsStart = (sectionId) => ({
   type: CardsActionTypes.FETCH_CARDS_START,
+  payload: sectionId,
 });
 
-export const fetchCardsSuccess = (cardsMap) => ({
+export const fetchCardsSuccess = (cardsMap, sectionId) => ({
   type: CardsActionTypes.FETCH_CARDS_SUCCESS,
-  payload: cardsMap,
+  payload: { cardsMap, sectionId },
 });
 
 export const fetchCardsFailure = (errorMessage) => ({

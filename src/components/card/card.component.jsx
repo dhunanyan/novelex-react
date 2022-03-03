@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSpring, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
 import firebase from "firebase/compat/app";
@@ -188,8 +188,26 @@ export const Card = ({
       output: ["scale(1.1)", "scale(1)", "scale(1)"],
     });
   };
+  const chunk = (items, size) => {
+    const chunks = [];
+    items = [].concat(...items);
+
+    while (items.length) {
+      chunks.push(items.splice(0, size));
+    }
+
+    return chunks;
+  };
 
   const dispatch = useDispatch();
+  // twoSizeArr.push(size === 2 ? [name, gridRow] : false);
+  // const filteredTwoSizeArr = twoSizeArr.filter((el) => el);
+  // const sortedTwoSizeArr = filteredTwoSizeArr.sort(
+  //   (k1, k2) => k1[1].gridRow - k2[1].gridRow
+  // );
+  // const flatTwoSizeArr = sortedTwoSizeArr.flat();
+  // const chunkTwoSizeArr = chunk(flatTwoSizeArr, 4);
+  // console.log(chunkTwoSizeArr);
 
   const handleOnClick = () => {
     dispatch(deleteCard(card));
@@ -203,7 +221,7 @@ export const Card = ({
         querySnapshot.docs[0].ref.delete();
       });
   };
-  console.log(imageUrl);
+
   return (
     <CardContainer
       fill={fill}
@@ -221,7 +239,7 @@ export const Card = ({
         <CardButtonsContainer>
           <CardEdit fill={fill} opacity={opacity} onClick={handleOnClick}>
             <Pen />
-          </CardEdit>{" "}
+          </CardEdit>
           <CardDelete fill={fill} opacity={opacity} onClick={handleOnClick}>
             <Trash />
           </CardDelete>

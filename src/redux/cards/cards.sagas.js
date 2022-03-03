@@ -1,9 +1,4 @@
-import { connect, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { compose } from "redux";
 import { takeLatest, call, put, all } from "redux-saga/effects";
-import { createStructuredSelector } from "reselect";
-import WithSpinner from "../../components/with-spinner/with-spinner.component";
 
 import {
   firestore,
@@ -13,15 +8,20 @@ import {
 import { fetchCardsSuccess, fetchCardsFailure } from "./cards.actions";
 
 import CardsActionTypes from "./cards.types";
+import { filterCards } from "./cards.utils";
 
-export function* fetchCardsAsync() {
+export function* fetchCardsAsync({ payload: sectionId }) {
   try {
     const cardsRef = firestore.collection("cards");
 
     const cardsSnapshot = yield cardsRef.get();
 
-    const cardsMap = yield call(convertCardsSnapshotToMap, cardsSnapshot);
-    yield put(fetchCardsSuccess(cardsMap));
+    const cardsMapp = yield call(convertCardsSnapshotToMap, cardsSnapshot);
+
+    const filteredCards = yield call(filterCards, cardsMapp, sectionId);
+
+    console.log(filteredCards);
+    yield put(fetchCardsSuccess({ filteredCards, sectionId }));
   } catch (error) {
     yield put(fetchCardsFailure(error));
   }

@@ -1,5 +1,5 @@
 import CardsActionTypes from "./cards.types";
-import { addCard, removeCard } from "./cards.utils";
+import { addCard, filterCards, removeCard } from "./cards.utils";
 
 const INITIAL_STATE = {
   cards: null,
@@ -20,7 +20,7 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        cards: action.payload,
+        cards: filterCards(action.payload),
       };
     case CardsActionTypes.FETCH_CARDS_FAILURE:
       return {

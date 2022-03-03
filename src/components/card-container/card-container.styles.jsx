@@ -21,12 +21,13 @@ export const CardsWrapper = styled.div`
   background-image: linear-gradient(135deg, #227cb1, #f3af64);
 `;
 
-const getGridCols = (gridCol) => {
+const getGridCols = (gridCol, currentUser) => {
   return gridCol === 1 ? 1 : gridCol === 2 ? 3 : gridCol === 3 ? 5 : null;
 };
 
-export const getSize = (size, index, length, currentUser) => {
-  return currentUser && index === length - 2
+export const getSize = (size, gridCol, currentUser) => {
+  return ((gridCol === 2 && size === 2) || (gridCol === 1 && size === 3)) &&
+    currentUser
     ? size === 1
       ? 2
       : size === 2
@@ -37,7 +38,7 @@ export const getSize = (size, index, length, currentUser) => {
     : size === 1
     ? 2
     : size === 2
-    ? 3
+    ? 4
     : size === 3
     ? 6
     : null;
@@ -48,8 +49,7 @@ export const CardsGridInner = styled.div`
     console.log(size, index, length, currentUser);
     return `${getGridCols(gridCol)} / span ${getSize(
       size,
-      index,
-      length,
+      gridCol,
       currentUser
     )}`;
   }};
