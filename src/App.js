@@ -54,11 +54,5 @@ const App = () => {
     </div>
   );
 };
-// <Route path={`/:sectionId/addCard`} element={<ResultAdd />} />
-
-// <Route path="/about" element={<AboutPage />} />
-// <Route path="/services" element={<ServicesPage />} />
-// <Route path="/careers" element={<CareersPage />} />
-// <Route path="/life" element={<LifePage />} />
 
 export default App;

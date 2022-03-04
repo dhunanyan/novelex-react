@@ -5,9 +5,9 @@ export const fetchCardsStart = (sectionId) => ({
   payload: sectionId,
 });
 
-export const fetchCardsSuccess = (cardsMap, sectionId) => ({
+export const fetchCardsSuccess = (cardsMap) => ({
   type: CardsActionTypes.FETCH_CARDS_SUCCESS,
-  payload: { cardsMap, sectionId },
+  payload: cardsMap,
 });
 
 export const fetchCardsFailure = (errorMessage) => ({

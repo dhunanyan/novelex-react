@@ -16,12 +16,11 @@ export function* fetchCardsAsync({ payload: sectionId }) {
 
     const cardsSnapshot = yield cardsRef.get();
 
-    const cardsMapp = yield call(convertCardsSnapshotToMap, cardsSnapshot);
+    const cardsMap = yield call(convertCardsSnapshotToMap, cardsSnapshot);
 
-    const filteredCards = yield call(filterCards, cardsMapp, sectionId);
+    const filteredCards = yield call(filterCards, cardsMap, sectionId);
 
-    console.log(filteredCards);
-    yield put(fetchCardsSuccess({ filteredCards, sectionId }));
+    yield put(fetchCardsSuccess(filteredCards));
   } catch (error) {
     yield put(fetchCardsFailure(error));
   }

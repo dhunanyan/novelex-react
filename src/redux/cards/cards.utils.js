@@ -1,5 +1,4 @@
 export const addCard = (cards, cardToAdd) => {
-  console.log(cards);
   const sameCard = Object.values(cards).map((value) =>
     value.name !== cardToAdd.name ? value : null
   );
@@ -28,7 +27,7 @@ export const removeCard = (cards, cardToRemove) => {
   return obj;
 };
 
-export const filterCards = ({ cardMap, sectionId }) => {
+export const filterCards = (cardMap, sectionId) => {
   const arrayToObject = (arr, key) => {
     return arr.reduce((obj, item) => {
       obj[item[key]] = item;

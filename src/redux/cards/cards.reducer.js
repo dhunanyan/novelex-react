@@ -20,7 +20,7 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        cards: filterCards(action.payload),
+        cards: action.payload,
       };
     case CardsActionTypes.FETCH_CARDS_FAILURE:
       return {

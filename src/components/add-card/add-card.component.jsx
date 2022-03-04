@@ -121,7 +121,6 @@ const CardAdd = ({
     setCard({ ...card, [name]: Number(value) });
   };
 
-  console.log(card.gridRow, card.gridCol, card.size);
   return (
     <CardLayer>
       <CardLayerInner onClick={handleCloseButton} />
