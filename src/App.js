@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
-import "./Global.styles.scss";
+import "./Global.styles.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import HomePage from "./pages/home/home.component";
