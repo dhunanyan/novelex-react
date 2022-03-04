@@ -4,11 +4,7 @@ import { useDrag } from "react-use-gesture";
 import firebase from "firebase/compat/app";
 
 import { IoIosQuote as Quots } from "react-icons/io";
-import {
-  FaHandPointDown as Hand,
-  FaTrashAlt as Trash,
-  FaPen as Pen,
-} from "react-icons/fa";
+import { FaTrashAlt as Trash, FaPen as Pen } from "react-icons/fa";
 
 import {
   CardButton,
@@ -21,6 +17,7 @@ import {
   CardTopSheetLayer,
   CardButtonsContainer,
   CardEdit,
+  HandIcon,
 } from "./card.styles";
 import { useDispatch } from "react-redux";
 import {} from "../../redux/cards/cards.selectors";
@@ -83,7 +80,14 @@ export const TopSheet = ({ y, set, onActive, onProgress, cardDescr }) => {
   );
 };
 
-export const BottomSheet = ({ y, set, onActive, onProgress, fill }) => {
+export const BottomSheet = ({
+  y,
+  set,
+  onActive,
+  onProgress,
+  fill,
+  opacity,
+}) => {
   const [expanded, setExpanded] = useState(false);
   const bind = useDrag(
     ({ movement: [x, y], down, tap }) => {
@@ -122,10 +126,16 @@ export const BottomSheet = ({ y, set, onActive, onProgress, fill }) => {
     }
   );
 
+  const [isRotated, setIsRotated] = useState(false);
+
+  const handleClick = () => {
+    setIsRotated(!isRotated);
+  };
+
   return (
-    <CardBottomSheet style={{ y }} {...bind()}>
+    <CardBottomSheet style={{ y }} {...bind()} onClick={handleClick}>
       <h3>
-        <Hand />
+        <HandIcon isRotated={isRotated} opacity={opacity} />
       </h3>
       <CardButton fill={fill} to="/" className="card-button">
         Read more
@@ -134,19 +144,7 @@ export const BottomSheet = ({ y, set, onActive, onProgress, fill }) => {
   );
 };
 
-export const Card = ({
-  card,
-  fill,
-  opacity,
-  index,
-  length,
-  currentUser,
-  size,
-  gridCol,
-  gridRow,
-  width,
-  margin,
-}) => {
+export const Card = ({ card, fill, opacity, currentUser }) => {
   const { name, title, descr, imageUrl } = card;
   const [active, setActive] = useState({ top: false, bottom: false });
   // const [expanded, setExpanded] = useState(false);
@@ -188,26 +186,8 @@ export const Card = ({
       output: ["scale(1.1)", "scale(1)", "scale(1)"],
     });
   };
-  const chunk = (items, size) => {
-    const chunks = [];
-    items = [].concat(...items);
-
-    while (items.length) {
-      chunks.push(items.splice(0, size));
-    }
-
-    return chunks;
-  };
 
   const dispatch = useDispatch();
-  // twoSizeArr.push(size === 2 ? [name, gridRow] : false);
-  // const filteredTwoSizeArr = twoSizeArr.filter((el) => el);
-  // const sortedTwoSizeArr = filteredTwoSizeArr.sort(
-  //   (k1, k2) => k1[1].gridRow - k2[1].gridRow
-  // );
-  // const flatTwoSizeArr = sortedTwoSizeArr.flat();
-  // const chunkTwoSizeArr = chunk(flatTwoSizeArr, 4);
-  // console.log(chunkTwoSizeArr);
 
   const handleOnClick = () => {
     dispatch(deleteCard(card));
@@ -223,18 +203,7 @@ export const Card = ({
   };
 
   return (
-    <CardContainer
-      fill={fill}
-      cardName={name}
-      length={length}
-      index={index}
-      size={size}
-      gridCol={gridCol}
-      gridRow={gridRow}
-      currentUser={currentUser}
-      width={width}
-      margin={margin}
-    >
+    <CardContainer fill={fill} currentUser={currentUser}>
       {currentUser ? (
         <CardButtonsContainer>
           <CardEdit fill={fill} opacity={opacity} onClick={handleOnClick}>
@@ -271,11 +240,12 @@ export const Card = ({
       />
       <BottomSheet
         fill={fill}
+        opacity={opacity}
         y={bottomY}
         set={bottomSet}
-        onActive={(bottomActive) =>
-          setActive({ ...active, bottom: bottomActive })
-        }
+        onActive={(bottomActive) => {
+          setActive({ ...active, bottom: bottomActive });
+        }}
         onProgress={(y, reset) => {
           if (active.bottom) {
             if (reset) {

@@ -29,15 +29,7 @@ import {
 import "./add-card.styles.scss";
 import { addingCard } from "../../redux/cards/cards.actions";
 
-const CardAdd = ({
-  sectionId,
-  fill,
-  opacity,
-  handleCloseButton,
-  gridRow,
-  gridCol,
-  cardsObjSorted,
-}) => {
+const CardAdd = ({ sectionId, opacity, handleCloseButton, cardsArrSorted }) => {
   const storage = firebase.storage();
   const dispatch = useDispatch();
   const cardsObjLength = useSelector(selectCardsLength);
@@ -176,7 +168,7 @@ const CardAdd = ({
                 value={card.gridRow}
                 onChange={handleSelectChange}
               >
-                {[...Array(cardsObjSorted.length - 1).keys()].map((row, i) => (
+                {[...Array(cardsArrSorted.length - 1).keys()].map((row, i) => (
                   <option key={i + 1} value={i + 1}>
                     Row: {i + 1}
                   </option>

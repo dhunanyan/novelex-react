@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
 import { fetchCardsStart } from "../../redux/cards/cards.actions";
-import { selectCards, selectCardsObj } from "../../redux/cards/cards.selectors";
+import {
+  selectCardsObj,
+  selectChunkedCardsArr,
+} from "../../redux/cards/cards.selectors";
 // import {
 //   AddButton,
 //   CardsContainer,
@@ -14,40 +16,18 @@ import { Card } from "../../components/card/card.component";
 
 import { MdPostAdd as Plus } from "react-icons/md";
 import CardAdd from "../add-card/add-card.component";
-import { CardsContainer, CardsWrapper } from "./card-container.styles";
+import {
+  AddButton,
+  CardsContainer,
+  CardsGridInner,
+  CardsWrapper,
+} from "./card-container.styles";
 
-const CardsSection = ({ currentUser, bodyLock, colors, sectionId }) => {
+const CardsSection = ({ currentUser, colors, sectionId, bodyLock }) => {
   const dispatch = useDispatch();
   const [isShownCardAdd, setIsShownCardAdd] = useState(false);
-  const cards = useSelector(selectCards);
-  const cardsObj = useSelector(selectCardsObj(sectionId));
-  const cardsObjSorted = cardsObj.sort((k1, k2) => {
-    const kk1 = `${k1[1].gridRow}${k1[1].gridRow}${k1[1].gridCol}`;
-    const kk2 = `${k2[1].gridRow}${k2[1].gridRow}${k2[1].gridCol}`;
-    return parseInt(kk1) - parseInt(kk2);
-  });
-
-  const chunk = (array) => {
-    const temporary = [],
-      chunk = 3;
-    let order = "";
-    for (let i = 0, j = 111; i < array.length; i++) {
-      order = parseInt(
-        `${array[i][1].gridRow}${array[i][1].gridRow}${array[i][1].gridCol}`
-      );
-      console.log(j);
-      if (j >= order) {
-        temporary.push(array.slice(i, i + chunk));
-        j++;
-      } else {
-        j += 110;
-      }
-    }
-
-    console.log(cardsObj);
-  };
-
-  chunk(cardsObjSorted);
+  const cardsArr = useSelector(selectChunkedCardsArr(sectionId));
+  const { opacity, fill } = colors;
 
   useEffect(() => {
     dispatch(fetchCardsStart(sectionId));
@@ -59,7 +39,45 @@ const CardsSection = ({ currentUser, bodyLock, colors, sectionId }) => {
 
   return (
     <CardsWrapper>
-      <CardsContainer></CardsContainer>
+      <CardsContainer>
+        {cardsArr.map((row, rowIndex) => (
+          <CardsGridInner key={rowIndex}>
+            {row.map((card, cardIndex) => {
+              console.log(card);
+              return card !== "addButton" ? (
+                <Card
+                  card={card[1]}
+                  fill={fill}
+                  opacity={opacity}
+                  currentUser={currentUser}
+                  key={cardIndex}
+                />
+              ) : null;
+            })}
+            {(row.length < 3 && currentUser) ||
+            (row[0] === "addButton" && currentUser) ? (
+              <AddButton
+                {...colors}
+                key={rowIndex}
+                onClick={() => {
+                  setIsShownCardAdd(true);
+                  bodyLock(true);
+                }}
+              >
+                <Plus />
+              </AddButton>
+            ) : null}
+          </CardsGridInner>
+        ))}
+        {isShownCardAdd ? (
+          <CardAdd
+            cardsArrSorted={cardsArr}
+            sectionId={sectionId}
+            {...colors}
+            handleCloseButton={handleCloseButton}
+          />
+        ) : null}
+      </CardsContainer>
     </CardsWrapper>
   );
 };
@@ -145,13 +163,13 @@ export default CardsSection;
 //           }
 //         })}
 
-//         {isShownCardAdd ? (
-//           <CardAdd
-//             cardsObjSorted={cardsObjSorted}
-//             sectionId={sectionId}
-//             {...colors}
-//             handleCloseButton={handleCloseButton}
-//           />
-//         ) : null}
-//       </CardsContainer>
+// {isShownCardAdd ? (
+//   <CardAdd
+//     cardsObjSorted={cardsObjSorted}
+//     sectionId={sectionId}
+//     {...colors}
+//     handleCloseButton={handleCloseButton}
+//   />
+// ) : null}
+// </CardsContainer>
 //     </CardsWrapper>

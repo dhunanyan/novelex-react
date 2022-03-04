@@ -7,13 +7,12 @@ import Hero from "../../components/hero/hero.component";
 import { selectSection } from "../../redux/sections/sections.selectors";
 
 import CardsSection from "../../components/card-container/card-container.component";
+import { SectionContainer } from "./section.styles";
 
 const SectionPage = ({ currentUser, bodyLock }) => {
   const { sectionId } = useParams();
   const section = useSelector(selectSection(sectionId));
   const { hero, largeCards, colors } = section;
-
-  const navigate = useNavigate();
 
   return (
     <div>

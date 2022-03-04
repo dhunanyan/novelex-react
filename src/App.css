@@ -1,28 +1,3 @@
-#root {
-  height: 100%;
-  overflow-y: auto;
-}
-
-#root.root--locked {
-  overflow-y: hidden;
-}
-
-.main {
-  margin: 0 auto;
-}
-
-.wrapper {
-  min-height: 100%;
-  width: 100%;
-  position: relative;
-}
-
-.wrapper--locked {
-  overflow: auto;
-  pointer-events: none;
-  min-height: 0;
-}
-
 button,
 p,
 h1,

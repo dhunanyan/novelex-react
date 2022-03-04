@@ -38,8 +38,7 @@ const chooseDirectoryItemType = ({ title }) => {
 };
 
 export const DirectoryContainer = styled(Container)`
-  margin-top: 70px;
-  padding: 60px;
+  padding: 130px 60px 60px 60px;
 
   @media (max-width: 768px) {
     padding: 30px;

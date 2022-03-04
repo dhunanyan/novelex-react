@@ -5,6 +5,7 @@ import homeAboutImg from "../../assets/about/hero.jpg";
 import homeServicesImg from "../../assets/services/hero.jpg";
 import homeCareersImg from "../../assets/careers/hero.jpg";
 import homeLifeImg from "../../assets/life/hero.jpg";
+import { Container } from "../../Global.styles";
 
 const getHeroImageUrl = (heroName) =>
   heroName === "home"
@@ -26,6 +27,18 @@ export const HeroWrapper = styled.section`
   background-repeat: repeat;
 `;
 
+export const HeroContainer = styled(Container)`
+  display: flex;
+  justify-content: flex-start;
+`;
+
+export const HeroContentContainer = styled.div`
+  background-color: rgba(48, 48, 48, 0.9);
+  clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+  padding: 18px 60px 18px 18px;
+  border-radius: 40px;
+`;
+
 export const HeroContent = styled.div`
   max-width: 700px;
   padding: 330px 0 80px 0;
@@ -37,7 +50,7 @@ export const HeroContent = styled.div`
 `;
 
 export const HeroSubtitle = styled.h4`
-  color: #f1f1f1;
+  color: #e1e1e1;
   display: flex;
   align-items: center;
 `;
@@ -55,9 +68,11 @@ export const HeroLine = styled.span`
 `;
 
 export const HeroTitle = styled.h1`
-  color: #f1f1f1;
+  color: #e1e1e1;
   font-size: 70px;
   font-weight: 700;
+
+  border-radius: 30px;
 
   @media (max-width: 991px) {
     font-size: 56px;

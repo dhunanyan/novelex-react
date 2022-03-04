@@ -1,14 +1,25 @@
 import styled, { css } from "styled-components";
 
-export const SignInContainer = styled.div`
-  width: 100%;
+export const SignInWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background: linear-gradient(90deg, #c7c5f4, #776bcc);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  padding: 120px 0;
-  margin: 70px 0 0 0;
+`;
+
+export const SignInContainer = styled.div`
+  padding: 130px 60px 60px 60px;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const SignInScreen = styled.div`

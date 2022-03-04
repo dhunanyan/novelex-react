@@ -25,6 +25,7 @@ import {
   SignInSocial,
   SignInSocialIcons,
   SignInLogo,
+  SignInWrapper,
 } from "./sign-in.styles";
 
 const SignIn = () => {
@@ -45,59 +46,61 @@ const SignIn = () => {
   };
 
   return (
-    <SignInContainer>
-      <SignInScreen>
-        <SignInLogo>
-          <img src={logo} alt="Logo" />
-        </SignInLogo>
-        <SignInScreenContent>
-          <SignInForm onSubmit={handleSubmit}>
-            <SignInField>
-              <User />
-              <SignInInput
-                name="email"
-                type="email"
-                value={email}
-                onChange={handleChange}
-                required
-                autoComplete="on"
-                placeholder="e-mail"
-              />
-            </SignInField>
-            <SignInField>
-              <Lock />
-              <SignInInput
-                placeholder="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={handleChange}
-                required
-                autoComplete="on"
-              />
-            </SignInField>
-            <SignInSubmit type="submit">
-              <span>Log In Now</span>
-              <Arrow />
-            </SignInSubmit>
-          </SignInForm>
-          <SignInSocial>
-            <h3>log in via</h3>
-            <SignInSocialIcons>
-              <Link to="#"></Link>
-              <Link to="#"></Link>
-              <Link to="#"></Link>
-            </SignInSocialIcons>
-          </SignInSocial>
-        </SignInScreenContent>
-        <SignInScreenBackground>
-          <SignInScreenBackgroundShape4 />
-          <SignInScreenBackgroundShape3 />
-          <SignInScreenBackgroundShape2 />
-          <SignInScreenBackgroundShape1 />
-        </SignInScreenBackground>
-      </SignInScreen>
-    </SignInContainer>
+    <SignInWrapper>
+      <SignInContainer>
+        <SignInScreen>
+          <SignInLogo>
+            <img src={logo} alt="Logo" />
+          </SignInLogo>
+          <SignInScreenContent>
+            <SignInForm onSubmit={handleSubmit}>
+              <SignInField>
+                <User />
+                <SignInInput
+                  name="email"
+                  type="email"
+                  value={email}
+                  onChange={handleChange}
+                  required
+                  autoComplete="on"
+                  placeholder="e-mail"
+                />
+              </SignInField>
+              <SignInField>
+                <Lock />
+                <SignInInput
+                  placeholder="password"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={handleChange}
+                  required
+                  autoComplete="on"
+                />
+              </SignInField>
+              <SignInSubmit type="submit">
+                <span>Log In Now</span>
+                <Arrow />
+              </SignInSubmit>
+            </SignInForm>
+            <SignInSocial>
+              <h3>log in via</h3>
+              <SignInSocialIcons>
+                <Link to="#"></Link>
+                <Link to="#"></Link>
+                <Link to="#"></Link>
+              </SignInSocialIcons>
+            </SignInSocial>
+          </SignInScreenContent>
+          <SignInScreenBackground>
+            <SignInScreenBackgroundShape4 />
+            <SignInScreenBackgroundShape3 />
+            <SignInScreenBackgroundShape2 />
+            <SignInScreenBackgroundShape1 />
+          </SignInScreenBackground>
+        </SignInScreen>
+      </SignInContainer>
+    </SignInWrapper>
   );
 };
 

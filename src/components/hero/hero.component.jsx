@@ -1,12 +1,13 @@
 import React from "react";
 
-import { Container } from "../../Global.styles";
 import {
   HeroContent,
   HeroWrapper,
   HeroTitle,
   HeroSubtitle,
   HeroLine,
+  HeroContainer,
+  HeroContentContainer,
 } from "./hero.styles";
 
 const Hero = ({ hero }) => {
@@ -14,15 +15,17 @@ const Hero = ({ hero }) => {
 
   return (
     <HeroWrapper heroName={heroName}>
-      <Container>
+      <HeroContainer>
         <HeroContent>
-          <HeroSubtitle>
-            {heroDescr}
-            <HeroLine></HeroLine>
-          </HeroSubtitle>
-          <HeroTitle>{heroTitle}</HeroTitle>
+          <HeroContentContainer>
+            <HeroSubtitle>
+              {heroDescr}
+              <HeroLine></HeroLine>
+            </HeroSubtitle>
+            <HeroTitle>{heroTitle}</HeroTitle>
+          </HeroContentContainer>
         </HeroContent>
-      </Container>
+      </HeroContainer>
     </HeroWrapper>
   );
 };
