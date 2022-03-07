@@ -19,6 +19,7 @@ const CardsSection = ({ currentUser, colors, sectionId, bodyLock }) => {
   const [isShownCardAdd, setIsShownCardAdd] = useState(false);
   const cardsArr = useSelector(selectChunkedCardsArr(sectionId));
   const { opacity, fill } = colors;
+  const [gridData, setGridData] = useState({ col: 0, row: 0 });
 
   useEffect(() => {
     dispatch(fetchCardsStart(sectionId));
@@ -26,6 +27,10 @@ const CardsSection = ({ currentUser, colors, sectionId, bodyLock }) => {
 
   const handleCloseButton = () => {
     return setIsShownCardAdd(false);
+  };
+
+  const getGridData = (data) => {
+    return setGridData(data);
   };
 
   return (
@@ -52,6 +57,11 @@ const CardsSection = ({ currentUser, colors, sectionId, bodyLock }) => {
                 onClick={() => {
                   setIsShownCardAdd(true);
                   bodyLock(true);
+                  getGridData(
+                    row.length === 1
+                      ? { col: 1, row: rowIndex + 1 }
+                      : { col: row.length, row: rowIndex + 1 }
+                  );
                 }}
               >
                 <Plus />

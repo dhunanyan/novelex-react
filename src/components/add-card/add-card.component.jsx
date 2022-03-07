@@ -29,13 +29,14 @@ import {
 import "./add-card.styles.scss";
 import { addingCard } from "../../redux/cards/cards.actions";
 
-const CardAdd = ({ sectionId, opacity, handleCloseButton, cardsArrSorted }) => {
+const CardAdd = ({ sectionId, opacity, handleCloseButton, gridData }) => {
   const storage = firebase.storage();
   const dispatch = useDispatch();
   const cardsObjLength = useSelector(selectCardsLength);
   const [image, setImage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
   const [progress, setProgress] = useState(0);
+  const { col, row } = gridData;
   const [card, setCard] = useState({
     cardId: cardsObjLength + 1,
     page: sectionId,
@@ -44,8 +45,8 @@ const CardAdd = ({ sectionId, opacity, handleCloseButton, cardsArrSorted }) => {
     title: "",
     imageUrl: "",
     size: 1,
-    gridRow: 1,
-    gridCol: 1,
+    gridRow: row,
+    gridCol: col,
   });
   const { descr, name, title } = card;
 
@@ -153,51 +154,6 @@ const CardAdd = ({ sectionId, opacity, handleCloseButton, cardsArrSorted }) => {
                 autoComplete="on"
                 placeholder="Card shorten name"
               />
-              <select
-                name="size"
-                value={card.size}
-                onChange={handleSelectChange}
-              >
-                <option value={1}>Small</option>
-                <option value={2}>Medium</option>
-                <option value={3}>Large</option>
-              </select>
-
-              <select
-                name="gridRow"
-                value={card.gridRow}
-                onChange={handleSelectChange}
-              >
-                {[...Array(cardsArrSorted.length - 1).keys()].map((row, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    Row: {i + 1}
-                  </option>
-                ))}
-              </select>
-
-              <select
-                name="gridCol"
-                value={card.gridCol}
-                onChange={handleSelectChange}
-              >
-                {[
-                  ...Array(
-                    card.size === 1
-                      ? 3
-                      : card.size === 2
-                      ? 2
-                      : card.size === 3
-                      ? 1
-                      : null
-                  ).keys(),
-                ]
-                  .reverse()
-                  .map((col, i) => (
-                    <option key={i} value={i + 1}>
-                      Column: {i + 1}
-                    </option>
-                  ))}
-              </select>
 
               <input
                 className="custom-file-input"
