@@ -18,6 +18,8 @@ import {
   CardButtonsContainer,
   CardEdit,
   HandIcon,
+  HandIconContainer,
+  CardAvatarImg,
 } from "./card.styles";
 import { useDispatch } from "react-redux";
 import {} from "../../redux/cards/cards.selectors";
@@ -129,14 +131,14 @@ export const BottomSheet = ({
   const [isRotated, setIsRotated] = useState(false);
 
   const handleClick = () => {
-    setIsRotated(!isRotated);
+    setIsRotated((isRotated) => !isRotated);
   };
 
   return (
     <CardBottomSheet style={{ y }} {...bind()} onClick={handleClick}>
-      <h3>
-        <HandIcon isRotated={isRotated} opacity={opacity} />
-      </h3>
+      <HandIconContainer isRotated={isRotated}>
+        <HandIcon opacity={opacity} />
+      </HandIconContainer>
       <CardButton fill={fill} to="/" className="card-button">
         Read more
       </CardButton>
@@ -214,10 +216,9 @@ export const Card = ({ card, fill, opacity, currentUser }) => {
           </CardDelete>
         </CardButtonsContainer>
       ) : null}
-      <CardAvatar
-        imageUrl={imageUrl}
-        style={{ y: avatarY(), transform: avatarScale() }}
-      />
+      <CardAvatar style={{ y: avatarY(), transform: avatarScale() }}>
+        <CardAvatarImg imageUrl={imageUrl} />
+      </CardAvatar>
       <CardTitle
         opacity={opacity}
         style={{ y: titleY(), transform: titleScale() }}

@@ -3,10 +3,13 @@ import styled, { css } from "styled-components";
 import { animated } from "react-spring";
 import { MdArrowDropDownCircle as Hand } from "react-icons/md";
 
-export const HandIcon = styled(Hand)`
-  color: ${({ opacity }) => `${opacity.replace("0.568", "0.93")}`};
+export const HandIconContainer = styled.h3`
   transform: ${({ isRotated }) => (isRotated ? "rotate(0)" : "rotate(180deg)")};
   transition: all 450ms ease-out;
+`;
+
+export const HandIcon = styled(Hand)`
+  color: ${({ opacity }) => `${opacity.replace("0.568", "0.93")}`};
 `;
 
 const CardSheet = css`
@@ -46,13 +49,19 @@ export const CardAvatar = styled(animated.div)`
   transform-origin: 50% 0;
   width: 100%;
   height: calc(100% - 240px);
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform;
+  overflow: hidden;
+`;
+
+export const CardAvatarImg = styled.div`
   background-image: ${({ imageUrl }) => `url('${imageUrl}')`};
   background-position: center;
   background-size: cover;
   background-repeat: repeat;
-  user-select: none;
-  -webkit-user-select: none;
-  will-change: transform;
+  width: 100%;
+  height: 100%;
 `;
 
 export const CardTitle = styled(animated.h2)`

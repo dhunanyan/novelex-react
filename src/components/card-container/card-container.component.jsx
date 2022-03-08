@@ -75,6 +75,7 @@ const CardsSection = ({ currentUser, colors, sectionId, bodyLock }) => {
             sectionId={sectionId}
             {...colors}
             handleCloseButton={handleCloseButton}
+            gridData={gridData}
           />
         ) : null}
       </CardsContainer>

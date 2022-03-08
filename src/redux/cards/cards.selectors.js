@@ -72,7 +72,6 @@ export const selectChunkedCardsArr = memoize((sectionId) =>
       resultArr.push(arrSorted.slice(i, i + rowsCount[j]));
     }
     resultArr.push(["addButton"]);
-    console.log(resultArr);
     return resultArr;
   })
 );
